@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(
-      `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/Form%20Finanzas%20Claras`,
+      `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/leads`,
       {
         method: 'POST',
         headers: {
