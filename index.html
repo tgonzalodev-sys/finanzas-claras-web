@@ -546,23 +546,8 @@
     Finanzas Claras te ayuda a entender en qué gastás para que tengas control real sobre tu plata — sin esfuerzo y sin vueltas.
   </p>
 
-  <!-- FORM -->
-  <div class="form-card" id="registro">
-    <div id="form-content">
-      <label class="form-label">Anotate para acceso anticipado</label>
-      <div class="form-row">
-        <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="given-name" />
-        <input type="email" id="email" placeholder="Tu email" autocomplete="email" />
-      </div>
-      <button class="btn-primary" onclick="handleSubmit()">Quiero saber a dónde va mi plata →</button>
-      <p class="form-disclaimer">Sin spam. Sin costo. Te avisamos cuando esté lista la beta.</p>
-    </div>
-
-    <div class="success-state" id="success-state">
-      <div class="success-icon">✓</div>
-      <h3>¡Listo, te anotamos!</h3>
-      <p>Te mandamos un mail en cuanto abramos la beta.<br>Gracias por la confianza.</p>
-    </div>
+  <div id="registro" style="max-width:460px;margin:0 auto;">
+    <iframe data-tally-src="https://tally.so/embed/0QLyW9?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="211" frameborder="0" marginheight="0" marginwidth="0" title="Leads"></iframe>
   </div>
 </section>
 
@@ -645,99 +630,16 @@
   <h2>Entendé tu plata.<br><em>De una vez.</em></h2>
   <p>Anotate para la beta cerrada — gratis, sin compromiso, y con acceso prioritario.</p>
 
-  <div class="form-card" id="registro2">
-    <div id="form-content-2">
-      <div class="form-row">
-        <input type="text" id="nombre2" placeholder="Tu nombre" autocomplete="given-name" />
-        <input type="email" id="email2" placeholder="Tu email" autocomplete="email" />
-      </div>
-      <button class="btn-primary" onclick="handleSubmit2()">Quiero acceso anticipado →</button>
-      <p class="form-disclaimer">Sin spam. Sin costo. Sin vueltas.</p>
-    </div>
-    <div class="success-state" id="success-state-2">
-      <div class="success-icon">✓</div>
-      <h3>¡Perfecto, te anotamos!</h3>
-      <p>Te contactamos en cuanto abramos la beta.</p>
-    </div>
+  <div id="registro2" style="max-width:460px;margin:0 auto;">
+    <iframe data-tally-src="https://tally.so/embed/0QLyW9?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="211" frameborder="0" marginheight="0" marginwidth="0" title="Leads"></iframe>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2025 Finanzas Claras · Argentina · <a href="/cdn-cgi/l/email-protection#d0b8bfbcb190b6b9beb1beaab1a3b3bcb1a2b1a3feb3bfbd"><span class="__cf_email__" data-cfemail="6a0205060b2a0c03040b04100b1909060b180b1944090507">[email&#160;protected]</span></a> · Tu información nunca se vende ni se comparte.</p>
+  <p>© 2025 Finanzas Claras · Argentina  · Tu información nunca se vende ni se comparte.</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  function validateForm(nombre, email) {
-    if (!nombre.trim()) { showError('Por favor ingresá tu nombre.'); return false; }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email.trim() || !emailRegex.test(email)) { showError('Por favor ingresá un email válido.'); return false; }
-    return true;
-  }
-
-  function showError(msg) {
-    const existing = document.querySelector('.form-error');
-    if (existing) existing.remove();
-    const el = document.createElement('p');
-    el.className = 'form-error';
-    el.textContent = msg;
-    el.style.cssText = 'color:#c0392b;font-size:13px;text-align:center;margin-top:10px;';
-    const btn = document.querySelector('.btn-primary:not([disabled])');
-    if (btn) btn.insertAdjacentElement('afterend', el);
-    setTimeout(() => el.remove(), 4000);
-  }
-
-  function setLoading(btn, loading) {
-    btn.disabled = loading;
-    btn.textContent = loading ? 'Enviando...' : btn.dataset.label;
-    btn.style.opacity = loading ? '0.7' : '1';
-  }
-
-  function showSuccess(formId, successId) {
-    document.getElementById(formId).style.display = 'none';
-    const s = document.getElementById(successId);
-    s.style.display = 'block';
-    s.style.animation = 'fadeUp 0.5s ease both';
-  }
-
-  async function submitForm(nombre, email, formId, successId, btn) {
-    if (!validateForm(nombre, email)) return;
-    if (!btn.dataset.label) btn.dataset.label = btn.textContent;
-    setLoading(btn, true);
-    try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, email }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error desconocido');
-      showSuccess(formId, successId);
-    } catch (err) {
-      setLoading(btn, false);
-      showError(err.message || 'Algo salió mal. Intentá de nuevo.');
-    }
-  }
-
-  function handleSubmit() {
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('email').value;
-    const btn = document.querySelector('#form-content .btn-primary');
-    submitForm(nombre, email, 'form-content', 'success-state', btn);
-  }
-
-  function handleSubmit2() {
-    const nombre = document.getElementById('nombre2').value;
-    const email = document.getElementById('email2').value;
-    const btn = document.querySelector('#form-content-2 .btn-primary');
-    submitForm(nombre, email, 'form-content-2', 'success-state-2', btn);
-  }
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key !== 'Enter') return;
-    const focused = document.activeElement;
-    if (focused && focused.closest('#form-content')) handleSubmit();
-    if (focused && focused.closest('#form-content-2')) handleSubmit2();
-  });
-
-  // Sm
+<script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script><script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')== null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+</body>
+</html>
